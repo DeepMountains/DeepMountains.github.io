@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>6. [番外]Kubernetes介绍 | DeepMountains</title><meta name="keywords" content="docker"><meta name="author" content="DeepMountains"><meta name="copyright" content="DeepMountains"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="referrer" content="no-referrer"><meta name="description" content="1.1 Kubernetes 的诞生 &amp;emsp;&amp;emsp;随着 Docker 技术的应用，对于容器的管理技术也随之出现。就比如 Apache 开发的 MESOS，Docker 官方的 docker SWARM。官方提供的 SWARM 所需要的系统资源只需要几十 MB，是一款非常轻量级的 Docker 容器管理工具。但是问题就在于它实在是太轻量了，导致很多功能都没有，比如说容器滚动更新、回滚等操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="6. [番外]Kubernetes介绍">
+<meta property="og:url" content="http://deepmountains.cn/2021/03/08/6.%20[%E7%95%AA%E5%A4%96]Kubernetes%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="DeepMountains">
+<meta property="og:description" content="1.1 Kubernetes 的诞生 &amp;emsp;&amp;emsp;随着 Docker 技术的应用，对于容器的管理技术也随之出现。就比如 Apache 开发的 MESOS，Docker 官方的 docker SWARM。官方提供的 SWARM 所需要的系统资源只需要几十 MB，是一款非常轻量级的 Docker 容器管理工具。但是问题就在于它实在是太轻量了，导致很多功能都没有，比如说容器滚动更新、回滚等操">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-08T12:26:00.000Z">
+<meta property="article:modified_time" content="2021-03-08T12:59:34.572Z">
+<meta property="article:author" content="DeepMountains">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/Avatar.png"><link rel="canonical" href="http://deepmountains.cn/2021/03/08/6.%20[%E7%95%AA%E5%A4%96]Kubernetes%E4%BB%8B%E7%BB%8D/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2021-03-08 20:59:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/Avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">DeepMountains</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">6. [番外]Kubernetes介绍</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-08T12:26:00.000Z" title="发表于 2021-03-08 20:26:00">2021-03-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-08T12:59:34.572Z" title="更新于 2021-03-08 20:59:34">2021-03-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/docker/">docker</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>1.1 Kubernetes 的诞生</p>
+<p>&emsp;&emsp;随着 Docker 技术的应用，对于容器的管理技术也随之出现。就比如 Apache 开发的 MESOS，Docker 官方的 docker SWARM。官方提供的 SWARM 所需要的系统资源只需要几十 MB，是一款非常轻量级的 Docker 容器管理工具。但是问题就在于它实在是太轻量了，导致很多功能都没有，比如说容器滚动更新、回滚等操作。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/1543119/1613002713554-486eab9e-9028-48c4-a409-757d6b35b0d7.png#align=left&display=inline&height=156&margin=%5Bobject%20Object%5D&name=image.png&originHeight=374&originWidth=990&size=270534&status=done&style=shadow&width=414" alt="image.png"><img src="https://cdn.nlark.com/yuque/0/2021/png/1543119/1613002737434-3666f568-2d65-4523-8316-946187a42b42.png#align=left&display=inline&height=295&margin=%5Bobject%20Object%5D&name=image.png&originHeight=750&originWidth=600&size=370765&status=done&style=shadow&width=236" alt="image.png"><br>&emsp;&amp;emsp:Kubernetes 这个词是“舵手”的希腊语，因为英文单词太长，业内将其命名为 K8s，k 和 s 两个字母之间正好有 8 个字母。相比较 MESOS 和 SWARM 而言，K8s 所拥有的容器管理功能和技术都非常的实用。<br><img src="https://cdn.nlark.com/yuque/0/2021/png/1543119/1613003744267-e2b13cb9-4846-49e4-95ae-69537183e19f.png#align=left&display=inline&height=258&margin=%5Bobject%20Object%5D&name=image.png&originHeight=516&originWidth=744&size=214968&status=done&style=shadow&width=372" alt="image.png"></p>
+<ul>
+<li>2019-05 Apache分布式资源管理框架MESOS最大的老东家Twitter不再使用，转而使用kubernetes。</li>
+<li>2019-07 阿里云宣布所有的云主机中取消Docker Swarm安装模块。</li>
+<li>谷歌拥有10多年的容器化使用经验，可以说对于容器管理的技术非常成熟。borg伯格容器管理系统，很多公司都对它垂涎三尺，但是谷歌不差钱。但是由于Docker的盛行，谷歌觉得容器管理技术的成熟是必然趋势，如果有公司开发出来比自己更加好用的系统?这可不行！于是使用Go语言对borg系统进行翻写，诞生了kubernetes！<ul>
+<li>轻量级：Go语言被誉为现代的C语言，支持进程管理消耗的资源少。</li>
+<li>开源：不要钱，比坑爹的某骨公司好多了。</li>
+<li>弹性伸缩：增加或者删除节点可以做到平滑过度。</li>
+<li>负载均衡：采用IPVS框架。</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">DeepMountains</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://deepmountains.cn/2021/03/08/6.%20[%E7%95%AA%E5%A4%96]Kubernetes%E4%BB%8B%E7%BB%8D/">http://deepmountains.cn/2021/03/08/6.%20[%E7%95%AA%E5%A4%96]Kubernetes%E4%BB%8B%E7%BB%8D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://deepmountains.cn" target="_blank">DeepMountains</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/docker/">docker</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/03/08/5.%20Docker%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">5. Docker网络配置</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/03/08/1. Docker介绍/" title="1. Docker介绍"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">1. Docker介绍</div></div></a></div><div><a href="/2021/03/08/3. Docker操作命令/" title="3. Docker操作命令"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">3. Docker操作命令</div></div></a></div><div><a href="/2021/03/08/2. Docker工作原理/" title="2. Docker工作原理"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">2. Docker工作原理</div></div></a></div><div><a href="/2021/03/08/4. Docker镜像构造/" title="4. Docker镜像构造"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">4. Docker镜像构造</div></div></a></div><div><a href="/2021/03/08/5. Docker网络配置/" title="5. Docker网络配置"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">5. Docker网络配置</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/Avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">DeepMountains</div><div class="author-info__description">一名网络安全行业的从业者</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">我起了，一个CVE日穿了，还有什么好说的啊！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/03/08/6.%20%5B%E7%95%AA%E5%A4%96%5DKubernetes%E4%BB%8B%E7%BB%8D/" title="6. [番外]Kubernetes介绍">6. [番外]Kubernetes介绍</a><time datetime="2021-03-08T12:26:00.000Z" title="发表于 2021-03-08 20:26:00">2021-03-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/03/08/5.%20Docker%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" title="5. Docker网络配置">5. Docker网络配置</a><time datetime="2021-03-08T12:25:40.000Z" title="发表于 2021-03-08 20:25:40">2021-03-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/03/08/4.%20Docker%E9%95%9C%E5%83%8F%E6%9E%84%E9%80%A0/" title="4. Docker镜像构造">4. Docker镜像构造</a><time datetime="2021-03-08T12:25:35.000Z" title="发表于 2021-03-08 20:25:35">2021-03-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/03/08/3.%20Docker%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/" title="3. Docker操作命令">3. Docker操作命令</a><time datetime="2021-03-08T12:25:30.000Z" title="发表于 2021-03-08 20:25:30">2021-03-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2021/03/08/2.%20Docker%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/" title="2. Docker工作原理">2. Docker工作原理</a><time datetime="2021-03-08T12:25:20.000Z" title="发表于 2021-03-08 20:25:20">2021-03-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By DeepMountains</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
