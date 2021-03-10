@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.nlark.com/yuque/0/2021/jpeg/1543119/1615349563136-22eaa80b-ffd6-48ab-8c48-12cfaa4335ca.jpeg">
 <meta property="article:published_time" content="2021-03-10T03:43:18.000Z">
-<meta property="article:modified_time" content="2021-03-10T04:13:45.408Z">
+<meta property="article:modified_time" content="2021-03-10T04:17:48.488Z">
 <meta property="article:author" content="DeepMountains">
 <meta property="article:tag" content="汇编">
 <meta name="twitter:card" content="summary">
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2021-03-10 12:13:45'
+  postUpdate: '2021-03-10 12:17:48'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -139,7 +139,7 @@
           document.documentElement.classList.remove('hide-aside')
         }
       }
-    })(window)</script><link rel="stylesheet" href="/css/gundong.css"><link rel="stylesheet" href="/css/plugins.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/Avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.nlark.com/yuque/0/2021/jpeg/1543119/1615349607009-d3056c94-b9dc-42bc-827c-f14165b34541.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">DeepMountains</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">1. 汇编语言与存储器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-10T03:43:18.000Z" title="发表于 2021-03-10 11:43:18">2021-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-10T04:13:45.408Z" title="更新于 2021-03-10 12:13:45">2021-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80x86/">汇编语言x86</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>漫长的秃头之旅开始了</p>
+    })(window)</script><link rel="stylesheet" href="/css/gundong.css"><link rel="stylesheet" href="/css/plugins.min.css"><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" data-lazy-src="/img/Avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div></div></div><hr></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.nlark.com/yuque/0/2021/jpeg/1543119/1615349607009-d3056c94-b9dc-42bc-827c-f14165b34541.jpeg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">DeepMountains</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">1. 汇编语言与存储器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-10T03:43:18.000Z" title="发表于 2021-03-10 11:43:18">2021-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-10T04:17:48.488Z" title="更新于 2021-03-10 12:17:48">2021-03-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80x86/">汇编语言x86</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>漫长的秃头之旅开始了</p>
 <h3 id="机器语言"><a href="#机器语言" class="headerlink" title="机器语言"></a>机器语言</h3><p>&emsp;&emsp;在学习汇编语言之前，我们首先来了解一下机器语言。机器语言是机器指令的集合。所谓的机器指令就是说是一台机器可以正确执行的命令，它是一列二进制数字。计算机将之转变为一列高低电平，以使计算机的电子器件受到驱动，进行运算。</p>
 <ul>
 <li>最早之前所谓的计算机是指可以专门执行机器指令，进行运算的机器，我们所说的PC机，有一个芯片来完成是上面所说的计算机的功能，这个芯片就是我们常说的CPU(Central Processing Unit，中央处理单元),CPU是一种微处理器。<ul>
@@ -157,7 +157,7 @@
 <li><p>寄存器：简单地讲是CPU中可以存储数据的器件，一个CPU中有多个寄存器。AX是其中一个寄存器的代号，BX是另一个寄存器的的代号。</p>
 </li>
 <li><p>但是计算机能够读懂的只有机器指令，那么如何让计算机执行程序员用汇编指令编写的程序呢？编译器：能够将汇编指令转换成机器指令的翻译程序。</p>
-<p><img src="/img/loading.gif" data-lazy-src="1.%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8.assets/image-20210310114849376.png" alt="image-20210310114849376"></p>
+<p><img src="/img/loading.gif" data-lazy-src="/img/blog_img/hb/1.%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8.assets/image-20210310114849376.png" alt="image-20210310114849376"></p>
 </li>
 <li><p>汇编语言的组成：[汇编语言的核心是汇编指令，它决定了汇编语言的特性]</p>
 <ul>
@@ -211,7 +211,7 @@
 <li><p>过程图如下：</p>
 </li>
 </ul>
-<p><img src="/img/loading.gif" data-lazy-src="1.%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8.assets/image-20210310120250736.png" alt="image-20210310120250736"></p>
+<p><img src="/img/loading.gif" data-lazy-src="/img/blog_img/hb/1.%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8.assets/image-20210310120250736.png" alt="image-20210310120250736"></p>
 <h4 id="地址总线"><a href="#地址总线" class="headerlink" title="地址总线"></a>地址总线</h4><p>&emsp;&emsp;CPU通过地址总线来指定存储器单元，可见地址总线上能够传送多少个不同信息，CPU就可以对多少个存储单元进行寻址。</p>
 <ul>
 <li><p>现在假设有10根地址总线，那么让我们来看一下它的寻址情况：10根导线可以传送10位二进制数据，那么可以查找2^10方也就是1024个存储单元，1024个字节，那么1025个字节就无法查找到。</p>
@@ -219,7 +219,7 @@
 <li><p>再拿X86的系统做例子：32位的系统，32根地址总线，可寻找2^32个存储单元。<code>4,294,967,296B = 4,194,304 KB = 4096MB = 4GB</code>，所以32位的系统最多支持4G内存。</p>
 </li>
 <li><p>CPU向内存发出地址信息11时，10根到线上传送的二进制信息：</p>
-<p><img src="/img/loading.gif" data-lazy-src="1.%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8.assets/image-20210310120612839.png" alt="image-20210310120612839"></p>
+<p><img src="/img/loading.gif" data-lazy-src="/img/blog_img/hb/1.%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E4%B8%8E%E5%AD%98%E5%82%A8%E5%99%A8.assets/image-20210310120612839.png" alt="image-20210310120612839"></p>
 </li>
 <li><p>一个CPU有N根地址线，则可以说这个CPU的地址总线的宽度为N。这样的CPU最多可以寻找2的N次方各个内存单元。</p>
 </li>
